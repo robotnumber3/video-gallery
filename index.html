@@ -22,38 +22,16 @@
             min-height: 100vh;
         }
         
-        /* Intro/Header Section */
-        .intro {
-            background: white;
-            padding: 40px;
-            border-bottom: 3px solid #333;
-        }
-        
-        .intro h1 {
-            font-size: 2em;
-            margin-bottom: 15px;
-        }
-        
-        .intro p {
-            line-height: 1.6;
-            margin-bottom: 20px;
-            max-width: 600px;
-        }
-        
-        .intro img {
-            max-width: 100%;
-            height: auto;
-            margin-top: 20px;
-            border-radius: 4px;
-        }
-        
         /* Sidebar Menu */
         .sidebar {
-            width: 250px;
+            width: 500px;
             background: white;
             border-right: 1px solid #ddd;
             overflow-y: auto;
             padding: 20px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
         }
         
         .sidebar h2 {
@@ -63,68 +41,162 @@
             padding-bottom: 10px;
         }
         
+        .intro-button {
+            width: 100%;
+            padding: 12px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            transition: all 0.2s;
+        }
+        
+        .intro-button:hover {
+            background: #555;
+        }
+        
+        .intro-button.active {
+            background: #000;
+            border: 2px solid #666;
+        }
+        
         .video-list {
             list-style: none;
         }
         
         .video-list li {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         
         .video-list button {
             width: 100%;
-            padding: 12px;
-            background: #f0f0f0;
+            padding: 0;
+            background: transparent;
             border: 1px solid #ddd;
             border-radius: 4px;
             cursor: pointer;
-            text-align: left;
-            font-size: 0.95em;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
             transition: all 0.2s;
+            overflow: hidden;
         }
         
         .video-list button:hover {
-            background: #e0e0e0;
             border-color: #333;
+            background: #f5f5f5;
         }
         
         .video-list button.active {
             background: #333;
-            color: white;
             border-color: #333;
         }
         
-        /* Main Content */
+        .video-thumbnail {
+            width: 96px;
+            height: auto;
+            flex-shrink: 0;
+            border-radius: 2px;
+        }
+        
+        .video-title {
+            flex: 1;
+            padding: 12px;
+            text-align: left;
+            font-size: 0.9em;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+        }
+        
+        .video-list button.active .video-title {
+            color: white;
+        }
+        
+        /* Main Content Area */
         .main {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .intro-full {
+            overflow-y: auto;
+            padding: 40px;
             background: white;
-            padding: 40px;
         }
         
-        .video-player {
-            flex: 1;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-            background: #f5f5f5;
+        .main h1 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
         }
         
-        .video-player.active {
-            display: flex;
-        }
-        
-        .video-player iframe {
-            width: 100%;
+        .page-content p {
+            line-height: 1.8;
+            margin-bottom: 25px;
+            font-size: 1.05em;
             max-width: 800px;
+        }
+        
+        .photo-container {
+            margin: 30px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .photo-container img {
+            max-width: 100%;
             height: auto;
-            aspect-ratio: 16 / 9;
             border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .photo-single {
+            max-width: 600px;
+        }
+        
+        .photo-double {
+            max-width: calc(50% - 10px);
+        }
+        
+        @media (max-width: 900px) {
+            .photo-double {
+                max-width: 100%;
+            }
+        }
+        
+        .youtube-link-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #ddd;
+            max-width: 800px;
+        }
+        
+        .youtube-link-section a {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #ff0000;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background 0.2s;
+        }
+        
+        .youtube-link-section a:hover {
+            background: #cc0000;
+        }
+        
+        /* Hide pages by default */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
         }
         
         /* Responsive */
@@ -135,93 +207,216 @@
             
             .sidebar {
                 width: 100%;
+                height: auto;
+                position: static;
                 border-right: none;
                 border-bottom: 1px solid #ddd;
+                max-height: 400px;
             }
             
-            .intro {
+            .main {
                 padding: 20px;
             }
             
-            .intro h1 {
+            .main h1 {
                 font-size: 1.5em;
             }
             
-            .video-player {
-                padding: 20px;
+            .video-list button {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .video-thumbnail {
+                width: 100%;
+            }
+            
+            .video-title {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Sidebar with video menu -->
+        <!-- Sidebar -->
         <div class="sidebar">
+            <button class="intro-button active" onclick="showPage('intro')">INTRO</button>
             <h2>Videos</h2>
             <ul class="video-list" id="videoMenu">
-                <!-- Videos will be generated by JavaScript -->
+                <!-- Menu items generated by JavaScript -->
             </ul>
         </div>
         
-        <!-- Main content area -->
-        <div class="main">
-            <!-- Intro section -->
-            <div class="intro-full">
-                <h1>My Video Gallery</h1>
-                <p>Welcome to my collection of videos. Select any video from the menu to the left to watch it here.</p>
-                <img src="https://via.placeholder.com/600x300" alt="Intro image">
-            </div>
-            
-            <!-- Video player -->
-            <div class="video-player">
-                <iframe id="videoFrame" 
-                        src="" 
-                        frameborder="0" 
-                        allowfullscreen>
-                </iframe>
-            </div>
+        <!-- Main Content -->
+        <div class="main" id="mainContent">
+            <!-- Pages generated by JavaScript -->
         </div>
     </div>
     
     <script>
-        // LIST OF YOUR VIDEOS
-        // Format: { title: "Video Name", videoId: "YOUTUBE_VIDEO_ID" }
-        // To get the video ID: go to YouTube, open your video, look at the URL
-        // Example: https://www.youtube.com/watch?v=dQw4w9WgXcQ  → ID is "dQw4w9WgXcQ"
-        
+        // ============================================
+        // VIDEO DATA WITH THUMBNAILS
+        // ============================================
         const videos = [
-            { title: "Motifs_02 – 31 EDO", videoId: "bvSN_zy5_64" },
-            { title: "Motifs_01 - Octatonic (WH)", videoId: "9E4nmQIQcEo" },
-            // Add more videos here following the same format
+            { 
+                title: "Motifs_02 – 31 EDO", 
+                videoId: "bvSN_zy5_64", 
+                thumbnail: "images/motifs_02.jpg"
+            },
+            { 
+                title: "Motifs_01 - Octatonic (WH)", 
+                videoId: "9E4nmQIQcEo", 
+                thumbnail: "images/motifs_01.jpg"
+            }
         ];
         
-        // Generate menu buttons
+        // ============================================
+        // PAGE CONTENT DATA
+        // ============================================
+        const pages = {
+            intro: {
+                title: "Welcome to My Video Gallery",
+                content: [
+                    {
+                        type: "text",
+                        value: "This is the introduction to your video collection. Add your overview text here. Explain what these tutorials are about and what viewers can expect."
+                    },
+                    {
+                        type: "text",
+                        value: "Add more paragraphs here. You can intersperse them with photos throughout the page. Each tutorial is also described below in the menu on the left."
+                    }
+                ],
+                youtubeId: null
+            }
+        };
+        
+        // Generate pages for each video from the videos array
+        videos.forEach((video, index) => {
+            pages[`video${index}`] = {
+                title: video.title,
+                content: [
+                    {
+                        type: "text",
+                        value: "Replace this with your tutorial text. Explain what this tutorial covers and any important context."
+                    },
+                    {
+                        type: "text",
+                        value: "Add more paragraphs to break up the content. Tutorial content works best when text and photos are interleaved."
+                    }
+                ],
+                youtubeId: video.videoId
+            };
+        });
+        
+        // ============================================
+        // GENERATE SIDEBAR MENU
+        // ============================================
         const videoMenu = document.getElementById('videoMenu');
         videos.forEach((video, index) => {
             const li = document.createElement('li');
             const button = document.createElement('button');
-            button.textContent = video.title;
-            button.onclick = () => playVideo(video.videoId, button);
+            button.onclick = () => showPage(`video${index}`);
+            
+            const img = document.createElement('img');
+            img.src = video.thumbnail;
+            img.alt = video.title;
+            img.className = 'video-thumbnail';
+            
+            const titleDiv = document.createElement('div');
+            titleDiv.className = 'video-title';
+            titleDiv.textContent = video.title;
+            
+            button.appendChild(img);
+            button.appendChild(titleDiv);
             li.appendChild(button);
             videoMenu.appendChild(li);
         });
         
-        // Play selected video
-        function playVideo(videoId, buttonElement) {
-            // Update iframe
-            const iframe = document.getElementById('videoFrame');
-            iframe.src = `https://www.youtube.com/embed/${videoId}`;
+        // ============================================
+        // RENDER PAGES
+        // ============================================
+        function showPage(pageId) {
+            const mainContent = document.getElementById('mainContent');
+            const page = pages[pageId];
             
-            // Show video player
-            const playerDiv = document.querySelector('.video-player');
-            playerDiv.classList.add('active');
+            if (!page) return;
             
-            // Update button styles
-            document.querySelectorAll('.video-list button').forEach(btn => {
+            // Clear previous content
+            mainContent.innerHTML = '';
+            
+            // Add page title
+            const title = document.createElement('h1');
+            title.textContent = page.title;
+            mainContent.appendChild(title);
+            
+            // Add page content
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'page-content';
+            
+            page.content.forEach(item => {
+                if (item.type === 'text') {
+                    const p = document.createElement('p');
+                    p.textContent = item.value;
+                    contentDiv.appendChild(p);
+                }
+                else if (item.type === 'photo') {
+                    const img = document.createElement('img');
+                    img.src = item.value;
+                    img.alt = 'Tutorial photo';
+                    img.className = 'photo-single';
+                    const photoDiv = document.createElement('div');
+                    photoDiv.className = 'photo-container';
+                    photoDiv.appendChild(img);
+                    contentDiv.appendChild(photoDiv);
+                }
+                else if (item.type === 'photos') {
+                    const photoDiv = document.createElement('div');
+                    photoDiv.className = 'photo-container';
+                    item.value.forEach(photoSrc => {
+                        const img = document.createElement('img');
+                        img.src = photoSrc;
+                        img.alt = 'Tutorial photo';
+                        img.className = 'photo-double';
+                        photoDiv.appendChild(img);
+                    });
+                    contentDiv.appendChild(photoDiv);
+                }
+            });
+            
+            mainContent.appendChild(contentDiv);
+            
+            // Add YouTube link if this page has a video
+            if (page.youtubeId) {
+                const youtubeSection = document.createElement('div');
+                youtubeSection.className = 'youtube-link-section';
+                const link = document.createElement('a');
+                link.href = `https://www.youtube.com/watch?v=${page.youtubeId}`;
+                link.target = '_blank';
+                link.textContent = 'Watch on YouTube';
+                youtubeSection.appendChild(link);
+                mainContent.appendChild(youtubeSection);
+            }
+            
+            // Update active button in sidebar
+            document.querySelectorAll('.intro-button, .video-list button').forEach(btn => {
                 btn.classList.remove('active');
             });
-            buttonElement.classList.add('active');
+            
+            if (pageId === 'intro') {
+                document.querySelector('.intro-button').classList.add('active');
+            } else {
+                const videoIndex = parseInt(pageId.replace('video', ''));
+                const buttons = document.querySelectorAll('.video-list button');
+                if (buttons[videoIndex]) {
+                    buttons[videoIndex].classList.add('active');
+                }
+            }
         }
+        
+        // Show intro page on load
+        showPage('intro');
     </script>
 </body>
 </html>
