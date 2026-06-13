@@ -174,20 +174,11 @@
             max-width: 800px;
         }
         
-        .youtube-link-section a {
-            display: inline-block;
-            padding: 15px 30px;
-            background: #ff0000;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 1.1em;
-            transition: background 0.2s;
-        }
-        
-        .youtube-link-section a:hover {
-            background: #cc0000;
+        .youtube-link-section iframe {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            aspect-ratio: 16 / 9;
         }
         
         /* Hide pages by default */
@@ -387,14 +378,20 @@
             
             mainContent.appendChild(contentDiv);
             
-            // Add YouTube link if this page has a video
+            // Add YouTube player if this page has a video
             if (page.youtubeId) {
                 const youtubeSection = document.createElement('div');
                 youtubeSection.className = 'youtube-link-section';
-                const link = document.createElement('a');
-                link.href = `https://www.youtube.com/watch?v=${page.youtubeId}`;
-                link.textContent = 'Watch on YouTube';
-                youtubeSection.appendChild(link);
+                
+                const iframe = document.createElement('iframe');
+                iframe.width = '560';
+                iframe.height = '315';
+                iframe.src = `https://www.youtube.com/embed/${page.youtubeId}`;
+                iframe.frameborder = '0';
+                iframe.allowFullscreen = true;
+                iframe.style.borderRadius = '4px';
+                
+                youtubeSection.appendChild(iframe);
                 mainContent.appendChild(youtubeSection);
             }
             
