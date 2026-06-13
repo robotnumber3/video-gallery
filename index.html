@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>video-gallery</title>
+    <title>My Video Gallery</title>
     <style>
         * {
             margin: 0;
@@ -108,11 +108,15 @@
         
         .video-player {
             flex: 1;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             padding: 40px;
             background: #f5f5f5;
+        }
+        
+        .video-player.active {
+            display: flex;
         }
         
         .video-player iframe {
@@ -171,7 +175,7 @@
             <!-- Video player -->
             <div class="video-player">
                 <iframe id="videoFrame" 
-                        src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                        src="" 
                         frameborder="0" 
                         allowfullscreen>
                 </iframe>
@@ -186,8 +190,10 @@
         // Example: https://www.youtube.com/watch?v=dQw4w9WgXcQ  → ID is "dQw4w9WgXcQ"
         
         const videos = [
-            { title: "Motifs_02 – 31 EDO", videoId: "bvSN_zy5_64" },
-            { title: "Motifs_01 - Octatonic (WH)", videoId: "9E4nmQIQcEo" },
+            { title: "Video One", videoId: "dQw4w9WgXcQ" },
+            { title: "Video Two", videoId: "jNQXAC9IVRw" },
+            { title: "Video Three", videoId: "9bZkp7q19f0" },
+            { title: "Video Four", videoId: "OPf0YbXqDm0" },
             // Add more videos here following the same format
         ];
         
@@ -198,7 +204,6 @@
             const button = document.createElement('button');
             button.textContent = video.title;
             button.onclick = () => playVideo(video.videoId, button);
-            if (index === 0) button.classList.add('active'); // First video is default
             li.appendChild(button);
             videoMenu.appendChild(li);
         });
@@ -208,6 +213,10 @@
             // Update iframe
             const iframe = document.getElementById('videoFrame');
             iframe.src = `https://www.youtube.com/embed/${videoId}`;
+            
+            // Show video player
+            const playerDiv = document.querySelector('.video-player');
+            playerDiv.classList.add('active');
             
             // Update button styles
             document.querySelectorAll('.video-list button').forEach(btn => {
